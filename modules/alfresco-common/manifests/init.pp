@@ -35,6 +35,10 @@ class alfresco-common{
 			File["/var/lib/tomcat7/conf/catalina.properties"],
 			# which relies on the shared/lib folder
 			File["/var/lib/tomcat7/shared/lib"],
+
+
+			# our global properties specifies /opt/alfresco still even though tomcat is elsewhere,
+			File["/opt/alfresco"],
 		],
 	}
 
@@ -49,6 +53,18 @@ class alfresco-common{
 		source => "puppet:///modules/alfresco-war/catalina.properties",
 		ensure => present,
 		require => [ Package["tomcat7"] ],
+	}
+
+
+
+	# our global properties specifies /opt/alfresco still even though tomcat is elsewhere,
+	# might as well use it for the data dir etc. for now
+	file { "/opt/alfresco":
+		ensure => directory,
+		owner => "tomcat7",
+		require => [ 
+			User["tomcat7"], 
+		],
 	}
 
 
