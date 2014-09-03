@@ -10,6 +10,7 @@ Vagrant.configure("2") do |config|
   end  
 
   config.vm.provision :puppet do |puppet|
+    puppet.module_path = "modules"
     puppet.options = "--verbose --debug"
   end
   config.vm.box = "trusty64"
