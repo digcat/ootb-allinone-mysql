@@ -112,32 +112,50 @@ class alfresco-common{
 
 
 
+	# the war files and global properties template
+	file { "/var/lib/tomcat7/webapps/alfresco.war":
+		source => "/tmp/web-server/webapps/alfresco.war",
+		require => Exec["unzip-alfresco-ce"],
+	}
+	file { "/var/lib/tomcat7/webapps/share.war":
+		source => "/tmp/web-server/webapps/share.war",
+		require => Exec["unzip-alfresco-ce"],
+	}
+	file { "/var/lib/tomcat7/shared/classes/alfresco-global.properties":
+		require => Package["tomcat7"],
+		content => template("alfresco-war/alfresco-global.properties.erb"),
+	}
+
+
+
+
+
 
 
 	# http://stackoverflow.com/a/18846683
 	# Using "creates" means that this exec is only run if this file does not exist 
 	exec { "retrieve-alfresco-ce":
-	  command => "wget -q ${alfresco_ce_url}",
-	  path => "/usr/bin",
-	  creates => "/vagrant/${alfresco_ce_filename}",
+		command => "wget -q ${alfresco_ce_url}",
+		path => "/usr/bin",
+		creates => "/vagrant/${alfresco_ce_filename}",
 	}
 
 
 
 	exec { "unzip-alfresco-ce":
-	  command => "unzip -o /vagrant/${alfresco_ce_filename} -d /tmp",
-	  path => "/usr/bin",
-	  require => [ 
-		Exec["retrieve-alfresco-ce"],
-		Package["tomcat7"], 
-		Package["unzip"], 
-	  ],
+		command => "unzip -o /vagrant/${alfresco_ce_filename} -d /tmp",
+		path => "/usr/bin",
+		require => [ 
+			Exec["retrieve-alfresco-ce"],
+			Package["tomcat7"], 
+			Package["unzip"], 
+		],
 	}
 
 
 	package { "unzip":
-	  ensure => present,
-	  require => Exec["apt-get update"],
+		ensure => present,
+		require => Exec["apt-get update"],
 	}
 
 
