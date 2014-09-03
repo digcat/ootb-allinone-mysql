@@ -42,11 +42,13 @@ class alfresco-common{
 	file{"/var/lib/tomcat7/shared/lib":
 		ensure => directory,
 		recurse => true,
+		require => [ Package["tomcat7"] ],
 	}
 
 	file { "/var/lib/tomcat7/conf/catalina.properties":
 		source => "puppet:///modules/alfresco-war/catalina.properties",
 		ensure => present,
+		require => [ Package["tomcat7"] ],
 	}
 
 
@@ -99,15 +101,15 @@ class alfresco-common{
 	# http://stackoverflow.com/a/18846683
 	# Using "creates" means that this exec is only run if this file does not exist 
 	exec { "retrieve-alfresco-ce":
-	  command => "wget -q http://dl.alfresco.com/release/community/4.2.f-build-00012/alfresco-community-4.2.f.zip -O /vagrant/alfresco-community-4.2.f.zip",
+	  command => "wget -q ${alfresco_ce_url}",
 	  path => "/usr/bin",
-	  creates => "/vagrant/alfresco-community-4.2.f.zip",
+	  creates => "/vagrant/${alfresco_ce_filename}",
 	}
 
 
 
 	exec { "unzip-alfresco-ce":
-	  command => "unzip -o /vagrant/alfresco-community-4.2.f.zip -d /tmp",
+	  command => "unzip -o /vagrant/${alfresco_ce_filename} -d /tmp",
 	  path => "/usr/bin",
 	  require => [ 
 		Exec["retrieve-alfresco-ce"],

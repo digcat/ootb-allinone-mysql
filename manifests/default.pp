@@ -8,6 +8,9 @@ $alfresco_db_port = "3306"
 # Username of alfresco user in unix system
 #$alfresco_sys_user = "alfrescosys"
 
+$alfresco_ce_filename = "alfresco-community-4.2.f.zip"
+$alfresco_ce_url = "http://dl.alfresco.com/release/community/4.2.f-build-00012/${alfresco_ce_filename}"
+
 #########################################################################################
 
 # hack so we can save things in the vagrant folder and not have
