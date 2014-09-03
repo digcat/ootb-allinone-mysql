@@ -16,7 +16,11 @@ package { "unzip":
   require => Exec["apt-get update"],
 }
 
-
+# for convenience, let's have the mysql-client
+package { "mysql-client":
+  ensure => present,
+  require => Exec["apt-get update"],
+}
 
 package { "tomcat7":
   ensure => present,
@@ -96,9 +100,8 @@ class { '::mysql::server':
   databases => {
     'alfresco' => {
         ensure  => 'present',
-            charset => 'utf8',
-              },
-    }
+        charset => 'utf8',
+    },
   }
 }
 
