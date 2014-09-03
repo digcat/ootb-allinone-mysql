@@ -10,6 +10,6 @@ Do not use this yet! It will not produce a working system at this time.
 Things to know
 
 * Alfresco runs under the ubuntu managed packaged ‘tomcat7’
-** Therefore the wars are found under /var/lib/tomcat7/webapps
-** And logging is in /var/log/tomcat7
-** Apart from alfresco.log and share.log are in /var/lib/tomcat7 for now
+    * Therefore the wars are found under /var/lib/tomcat7/webapps
+    * And logging is in /var/log/tomcat7
+    * Apart from alfresco.log and share.log are in /var/lib/tomcat7 for now
