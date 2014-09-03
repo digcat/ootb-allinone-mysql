@@ -5,40 +5,48 @@ $alfresco_db_pass = "userpassword"
 $alfresco_db_host = "localhost"
 $alfresco_db_port = "3306"
 
+# Username of alfresco user in unix system
+#$alfresco_sys_user = "alfrescosys"
+
 #########################################################################################
 
 # hack so we can save things in the vagrant folder and not have
 # to download them multiple times during development... notably
-# the alfresco CE zip will go here
+# the alfresco CE zip will go here. In a non vagrant setup we will
+# just end up with a /vagrant folder with these files in
 file {"/vagrant":
-    ensure => "directory",
+	ensure => "directory",
 }
 
 
 exec { "apt-get update":
-  path => "/usr/bin",
+	path => "/usr/bin",
 }
 
 
 
 class { '::mysql::server':
-  root_password    => 'strongpassword',
-  #override_options => $override_options,
+	  root_password    => 'strongpassword',
+	  #override_options => $override_options,
 }
 
- mysql::db { "$alfresco_db_name":
-      user     => "${alfresco_db_user}",
-      password => "${alfresco_db_pass}",
-      host     => "${alfresco_db_host}",
-      grant    => ['ALL'],
-    }
+mysql::db { "$alfresco_db_name":
+	user     => "${alfresco_db_user}",
+	password => "${alfresco_db_pass}",
+	host     => "${alfresco_db_host}",
+	grant    => ['ALL'],
+}
 
 
+class { '::mysql::bindings':
+	java_enable => 1,
+}
+
+# these are provided by the install-puppet-modules.sh script
 include '::mysql::server'
-
-
 include 'postfix'
 
+# these are provided in source form in this project
 include 'alfresco-common'
 include 'alfresco-war'
 include 'share-war'
