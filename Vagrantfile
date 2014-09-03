@@ -9,9 +9,12 @@ Vagrant.configure("2") do |config|
     #vb.customize ["modifyvm", :id, "--cpus", "2"]   
   end  
 
+  #config.vm.share_folder('templates', '/tmp/vagrant-puppet/templates', 'templates')
+
   config.vm.provision :puppet do |puppet|
     puppet.module_path = "modules"
-    puppet.options = "--verbose --debug"
+    #puppet.options = ["--templatedir","/tmp/vagrant-puppet/templates", "--verbose", "--debug"]
+    puppet.options = ["--verbose", "--debug"]
   end
   config.vm.box = "trusty64"
 
