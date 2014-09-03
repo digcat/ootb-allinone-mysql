@@ -19,11 +19,11 @@ solr.backup.archive.remoteBackupLocation=${dir.root}/backupsolr
 #
 # Database
 #-------------
-db.username=babel_alfresco
-db.password=xxxx
-db.name=babel_alfbabel
-db.host=xx.com
-db.port=3306
+db.username=<%= @alfresco_db_user %>
+db.password=<%= @alfresco_db_pass %>
+db.name=<%= @alfresco_db_name %>
+db.host=<%= @alfresco_db_host %>
+db.port=<%= @alfresco_db_port %>
 db.driver=com.mysql.jdbc.Driver
 db.url=jdbc:mysql://${db.host}:${db.port}/${db.name}?useUnicode=yes&characterEncoding=UTF-8&autoReconnect=true
 

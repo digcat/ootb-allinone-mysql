@@ -44,9 +44,9 @@ class alfresco-common{
 	}
 
 
-	file { "/var/lib/tomcat7/shared/classes/alfresco-global-properties":
-		source => "/vagrant/alfresco-global.properties",
-		require => Package["tomcat7"],
+	package { "unzip":
+	  ensure => present,
+	  require => Exec["apt-get update"],
 	}
 
 }
