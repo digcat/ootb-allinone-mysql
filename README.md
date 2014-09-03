@@ -12,4 +12,4 @@ Things to know
 * Alfresco runs under the ubuntu managed packaged ‘tomcat7’
     * Therefore the wars are found under /var/lib/tomcat7/webapps
     * And logging is in /var/log/tomcat7
-    * Apart from alfresco.log and share.log are in /var/lib/tomcat7 for now
+    * Apart from alfresco.log and share.log which are in /var/lib/tomcat7 for now
