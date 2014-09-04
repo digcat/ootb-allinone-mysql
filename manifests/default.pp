@@ -58,7 +58,7 @@ include 'postfix'
 include "libreoffice"
 include "keystore"
 include "swftools"
-include 'alfresco-common' # for now this is the allinone
+include "alfresco-common" # for now this is the allinone
 #include 'alfresco-war'
 #include 'share-war'
 
