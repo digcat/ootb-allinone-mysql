@@ -18,6 +18,7 @@ class alfresco-common{
 	# share-war classes in the case that they are both being loaded (i.e. allinone)
 	service { "tomcat7":
 		ensure  => "running",
+		#ensure  => "stopped",
 		require => [
 			Package["tomcat7"], 
 			File["/var/lib/tomcat7/webapps/share.war"],
@@ -38,7 +39,9 @@ class alfresco-common{
 
 
 			# our global properties specifies /opt/alfresco still even though tomcat is elsewhere,
-			File["/opt/alfresco"],
+			File[$alfresco_base_dir],
+
+			Class["::mysql::server"],
 		],
 	}
 
@@ -57,9 +60,7 @@ class alfresco-common{
 
 
 
-	# our global properties specifies /opt/alfresco still even though tomcat is elsewhere,
-	# might as well use it for the data dir etc. for now
-	file { "/opt/alfresco":
+	file { "${alfresco_base_dir}":
 		ensure => directory,
 		owner => "tomcat7",
 		require => [ 
@@ -69,17 +70,27 @@ class alfresco-common{
 
 
 
+#	# attempting to use non-versioned link to connector
+#	file { "/var/lib/tomcat7/shared/lib/mysql-connector-java.jar":
+#		target => "/usr/share/java/mysql-connector-java.jar",
+#		ensure => link,
+#		
+#		# libmysql-java provided by "class { '::mysql::bindings':" in the default.pp, 
+#		# needs to go elsewhere TODO
+#		require => [ Package["libmysql-java"] ], 
+#	}
+
+
 	# attempting to use non-versioned link to connector
 	file { "/var/lib/tomcat7/shared/lib/mysql-connector-java.jar":
-		target => "/usr/share/java/mysql-connector-java.jar",
-		ensure => link,
+		source => "/usr/share/java/mysql-connector-java.jar",
+		ensure => present,
+		links => follow,
 		
 		# libmysql-java provided by "class { '::mysql::bindings':" in the default.pp, 
 		# needs to go elsewhere TODO
 		require => [ Package["libmysql-java"] ], 
 	}
-
-
 
 
 	# By default the logs go where alfresco starts from, and in this case

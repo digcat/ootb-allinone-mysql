@@ -11,6 +11,9 @@ $alfresco_db_port = "3306"
 $alfresco_ce_filename = "alfresco-community-4.2.f.zip"
 $alfresco_ce_url = "http://dl.alfresco.com/release/community/4.2.f-build-00012/${alfresco_ce_filename}"
 
+
+$alfresco_base_dir = "/opt/alfrescobase"
+
 #########################################################################################
 
 # hack so we can save things in the vagrant folder and not have
@@ -50,9 +53,10 @@ include '::mysql::server'
 include 'postfix'
 
 # these are provided in source form in this project
+include "keystore"
 include 'alfresco-common'
-include 'alfresco-war'
-include 'share-war'
+#include 'alfresco-war'
+#include 'share-war'
 
 
 
