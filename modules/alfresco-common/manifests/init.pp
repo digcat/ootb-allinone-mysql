@@ -18,7 +18,7 @@ class alfresco-common{
 	# share-war classes in the case that they are both being loaded (i.e. allinone)
 	service { "tomcat7":
 		#ensure  => "running",
-		ensure  => "stopped",
+		ensure  => "stopped", # TODO for now I am leaving it stopped so I can watch things start up
 		require => [
 			Package["tomcat7"], 
 			File["/var/lib/tomcat7/webapps/share.war"],
