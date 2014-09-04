@@ -1,17 +1,19 @@
 
+$db_root_password = "strongpassword"
+
 $alfresco_db_name = "alfrescodb"
 $alfresco_db_user = "alfrescouser"
 $alfresco_db_pass = "userpassword"
 $alfresco_db_host = "localhost"
 $alfresco_db_port = "3306"
 
-# Username of alfresco user in unix system
+# Username of alfresco user in unix system (not used right now, tomcat7 user is owner)
 #$alfresco_sys_user = "alfrescosys"
 
 $alfresco_ce_filename = "alfresco-community-4.2.f.zip"
 $alfresco_ce_url = "http://dl.alfresco.com/release/community/4.2.f-build-00012/${alfresco_ce_filename}"
 
-
+# where alf_data lives; the webapps are in /var/lib/tomcat7/webapps
 $alfresco_base_dir = "/opt/alfrescobase"
 
 #########################################################################################
@@ -32,7 +34,7 @@ exec { "apt-get update":
 
 
 class { '::mysql::server':
-	  root_password    => 'strongpassword',
+	  root_password    => $db_root_password,
 	  #override_options => $override_options,
 }
 
@@ -54,7 +56,8 @@ include 'postfix'
 
 # these are provided in source form in this project
 include "keystore"
-include 'alfresco-common'
+include "swftools"
+include 'alfresco-common' # for now this is the allinone
 #include 'alfresco-war'
 #include 'share-war'
 

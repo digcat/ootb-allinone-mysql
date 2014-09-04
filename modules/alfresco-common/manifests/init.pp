@@ -44,6 +44,7 @@ class alfresco-common{
 			Class["::mysql::server"],
 
 			Class["keystore"],
+			Class["swftools"],
 		],
 	}
 
