@@ -17,8 +17,8 @@ class alfresco-common{
 	# it is not possible to reference the tomcat7 service in both alfresco-war and
 	# share-war classes in the case that they are both being loaded (i.e. allinone)
 	service { "tomcat7":
-		ensure  => "running",
-		#ensure  => "stopped",
+		#ensure  => "running",
+		ensure  => "stopped",
 		require => [
 			Package["tomcat7"], 
 			File["/var/lib/tomcat7/webapps/share.war"],
@@ -42,6 +42,8 @@ class alfresco-common{
 			File[$alfresco_base_dir],
 
 			Class["::mysql::server"],
+
+			Class["keystore"],
 		],
 	}
 
@@ -66,6 +68,7 @@ class alfresco-common{
 		require => [ 
 			User["tomcat7"], 
 		],
+		before => Class["keystore"],
 	}
 
 
