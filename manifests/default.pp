@@ -55,6 +55,7 @@ include '::mysql::server'
 include 'postfix'
 
 # these are provided in source form in this project
+include "libreoffice"
 include "keystore"
 include "swftools"
 include 'alfresco-common' # for now this is the allinone
