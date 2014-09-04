@@ -45,6 +45,8 @@ class alfresco-common{
 
 			Class["keystore"],
 			Class["swftools"],
+
+            File["/etc/default/tomcat7"],
 		],
 	}
 
@@ -143,7 +145,11 @@ class alfresco-common{
 
 
 
-
+    # tomcat memory set in here
+    file { "/etc/default/tomcat7":
+        require => Package["tomcat7"],
+        content => template("alfresco-common/default-tomcat7.erb")
+    }
 
 
 
