@@ -7,6 +7,11 @@ Do not use this yet! It will not produce a working system at this time.
 * Next run ‘vagrant up’
 * If by some miracle things are working you may be able to log in at http://localhost:3080/share
 
+What to modify
+
+* The configuration is going in the default puppet file which is in manifests/default.pp
+    * The variables at the start of the file are used in alfresco-global.properties and in /etc/default/tomcat7
+
 Things to know
 
 * Alfresco runs under the ubuntu managed package ‘tomcat7’
