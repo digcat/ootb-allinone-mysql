@@ -69,7 +69,7 @@ class alfresco-common{
 		require => [ 
 			User["tomcat7"], 
 		],
-		before => Class["keystore"],
+		#before => Class["keystore"],
 	}
 
 
