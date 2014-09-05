@@ -36,7 +36,7 @@ class swftools {
         path => "/bin:/usr/bin",
         cwd => "/tmp/swftools-2013-04-09-1007",
         provider => "shell",
-	before => Package["tomcat7"]
+
     }
 
 

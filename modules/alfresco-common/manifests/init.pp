@@ -22,13 +22,14 @@ class alfresco-common{
 		cwd => "/tmp",
 		path => "/bin:/usr/bin",
 		command => "tar xzf /vagrant/$filename_tomcat",
-		require => "retrieve-tomcat7",
+		require => Exec["retrieve-tomcat7"],
 	}
 
 	file { "/var/lib/tomcat7":
 		ensure => directory,
 		source => "/tmp/${name_tomcat}",
-		require => "unpack-tomcat7",
+		require => Exec["unpack-tomcat7"],
+		recurse => true,
 	}
 
 
@@ -175,7 +176,7 @@ class alfresco-common{
 	file { "/var/lib/tomcat7/shared/classes/alfresco-global.properties":
 		require => File["/var/lib/tomcat7/shared/classes"],
 		content => template("alfresco-war/alfresco-global.properties.erb"),
-		before => File["/var/lib/tomcat7"],
+		#before => File["/var/lib/tomcat7"],
 		ensure => present,
 	}
 
