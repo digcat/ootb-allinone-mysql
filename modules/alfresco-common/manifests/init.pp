@@ -218,16 +218,38 @@ class alfresco-common{
 		creates => "${download_path}/${alfresco_ce_filename}",
 	}
 
-
+	file { "/tmp/alfresco":
+		ensure => directory,
+	}
 
 	exec { "unzip-alfresco-ce":
-		command => "unzip -o ${download_path}/${alfresco_ce_filename} -d /tmp",
+		command => "unzip -o ${download_path}/${alfresco_ce_filename} -d /tmp/alfresco",
 		path => "/usr/bin",
 		require => [ 
 			Exec["retrieve-alfresco-ce"],
 			File["/var/lib/tomcat7"], 
 			Package["unzip"], 
+			File["/tmp/alfresco"],
 		],
+	}
+
+	# copy alfresco bin files to the alfresco base dir
+	file { "${alfresco_base_dir}/bin":
+		ensure => directory,
+		recurse => true,
+		source => "/tmp/alfresco/bin",
+		require => Exec["unzip-alfresco-ce"],
+	}
+
+
+	file { "${alfresco_base_dir}/amps":
+		ensure => directory,
+		#before => Exec["unzip-alfresco-ce"], # well really I would prefer it to be before the addons class...
+		before => Class["addons"],
+	}
+	file { "${alfresco_base_dir}/amps_share":
+		ensure => directory,
+		before => Class["addons"],
 	}
 
 

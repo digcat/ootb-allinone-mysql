@@ -23,6 +23,9 @@ $filename_tomcat = "${name_tomcat}.tar.gz"
 $url_tomcat = "http://ftp.sunet.se/pub/www/servers/apache/dist/tomcat/tomcat-7/v7.0.55/bin/${filename_tomcat}"
 
 
+$filename_jsconsole = "javascript-console-0.5.1.zip"
+$url_jsconsole = "https://share-extras.googlecode.com/files/${filename_jsconsole}"
+
 
 $download_path = "/vagrant/files" # see below
 
@@ -70,6 +73,7 @@ include '::mysql::server'
 include 'postfix'
 
 # these are provided in source form in this project
+include "addons"
 include "libreoffice"
 include "keystore"
 include "swftools"
