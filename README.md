@@ -21,3 +21,4 @@ Things to know
 * Right now most of the provisioning code is in alfresco-common, alfresco-war and share-war really aren’t doing anything useful
 * The “trusty64” box I use I got from http://vagrantbox.es: 
     * this I think: https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box
+* Currently search is set to lucene
