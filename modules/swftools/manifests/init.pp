@@ -3,9 +3,9 @@ class swftools {
 	$swftools = "http://www.swftools.org/swftools-2013-04-09-1007.tar.gz"
 
 	exec { "retrieve swftools":
-		command => "wget -q ${swftools} -O /vagrant/swftools.tar.gz",
+		command => "wget -q ${swftools} -O ${download_path}/swftools.tar.gz",
 		path => "/usr/bin",
-		creates => "/vagrant/swftools.tar.gz",
+		creates => "${download_path}/swftools.tar.gz",
 	}
 
 
@@ -14,7 +14,7 @@ class swftools {
 	}
 
 	exec { "unpack swftools":
-		command => "tar xzf /vagrant/swftools.tar.gz",
+		command => "tar xzf ${download_path}/swftools.tar.gz",
 		path => "/bin",
 		cwd => "/tmp",
 		require => [ Package["tar"], Exec["retrieve swftools"], ],

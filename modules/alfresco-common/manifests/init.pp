@@ -13,16 +13,17 @@ class alfresco-common{
 
 
 	exec { "retrieve-tomcat7":
-		creates => "/vagrant/$filename_tomcat",
-		command => "wget $url_tomcat -O /vagrant/$filename_tomcat",
+		creates => "${download_path}/$filename_tomcat",
+		command => "wget $url_tomcat -O ${download_path}/$filename_tomcat",
 		path => "/usr/bin",
 	}
 
 	exec { "unpack-tomcat7":
 		cwd => "/tmp",
 		path => "/bin:/usr/bin",
-		command => "tar xzf /vagrant/$filename_tomcat",
+		command => "tar xzf ${download_path}/$filename_tomcat",
 		require => Exec["retrieve-tomcat7"],
+		unless => "test -f /var/lib/tomcat7/bin/bootstrap.jar",
 	}
 
 	file { "/var/lib/tomcat7":
@@ -30,6 +31,7 @@ class alfresco-common{
 		source => "/tmp/${name_tomcat}",
 		require => Exec["unpack-tomcat7"],
 		recurse => true,
+		owner => "tomcat7",
 	}
 
 
@@ -211,15 +213,15 @@ class alfresco-common{
 	# http://stackoverflow.com/a/18846683
 	# Using "creates" means that this exec is only run if this file does not exist 
 	exec { "retrieve-alfresco-ce":
-		command => "wget -q ${alfresco_ce_url}",
+		command => "wget -q ${alfresco_ce_url} -O ${download_path}/${alfresco_ce_filename}	",
 		path => "/usr/bin",
-		creates => "/vagrant/${alfresco_ce_filename}",
+		creates => "${download_path}/${alfresco_ce_filename}",
 	}
 
 
 
 	exec { "unzip-alfresco-ce":
-		command => "unzip -o /vagrant/${alfresco_ce_filename} -d /tmp",
+		command => "unzip -o ${download_path}/${alfresco_ce_filename} -d /tmp",
 		path => "/usr/bin",
 		require => [ 
 			Exec["retrieve-alfresco-ce"],

@@ -22,6 +22,10 @@ $name_tomcat = "apache-tomcat-7.0.55"
 $filename_tomcat = "${name_tomcat}.tar.gz"
 $url_tomcat = "http://ftp.sunet.se/pub/www/servers/apache/dist/tomcat/tomcat-7/v7.0.55/bin/${filename_tomcat}"
 
+
+
+$download_path = "/vagrant/files" # see below
+
 #########################################################################################
 
 # hack so we can save things in the vagrant folder and not have
@@ -30,6 +34,11 @@ $url_tomcat = "http://ftp.sunet.se/pub/www/servers/apache/dist/tomcat/tomcat-7/v
 # just end up with a /vagrant folder with these files in
 file {"/vagrant":
 	ensure => "directory",
+}
+file {"/vagrant/files": 
+	ensure => "directory",
+	require => File["/vagrant"],
+	before => [ Exec["retrieve-alfresco-ce"], Exec["retrieve swftools"], Exec["retrieve-tomcat7"], ],
 }
 
 
