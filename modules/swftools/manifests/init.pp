@@ -15,10 +15,10 @@ class swftools {
 
 	exec { "unpack swftools":
 		command => "tar xzf ${download_path}/swftools.tar.gz",
-		path => "/bin",
+		path => "/bin:/usr/bin",
 		cwd => "/tmp",
 		require => [ Package["tar"], Exec["retrieve swftools"], ],
-	    
+	    	unless => "test -d /tmp/swftools-2013-04-09-1007",
 	}
 
     exec { "build swftools":
@@ -36,6 +36,7 @@ class swftools {
         path => "/bin:/usr/bin",
         cwd => "/tmp/swftools-2013-04-09-1007",
         provider => "shell",
+	unless => "test -x /usr/local/bin/pdf2swf",
 
     }
 

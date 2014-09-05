@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -e
+
 # -------
 # Script for apply AMPs to installed WAR
 #
@@ -14,7 +17,7 @@ export SCRIPTPATH=$(pwd)
 export ALF_HOME=<%= @alfresco_base_dir %>
 export CATALINA_HOME=/var/lib/tomcat7
 
-. $ALF_HOME/scripts/setenv.sh
+#. $ALF_HOME/scripts/setenv.sh
 #echo "This script will apply all the AMPs in amps and amps_share to the alfresco.war and share.war files in $CATALINA_HOME/webapps"
 #echo "Press control-c to stop this script . . ."
 #echo "Press any other key to continue . . ."

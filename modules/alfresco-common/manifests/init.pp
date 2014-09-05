@@ -53,12 +53,14 @@ class alfresco-common{
 		#ensure  => "stopped", # TODO for now I am leaving it stopped so I can watch things start up
 		subscribe => [
 			File["/var/lib/tomcat7/shared/classes/alfresco-global.properties"],
+			File["/var/lib/tomcat7/webapps/alfresco.war"],
+			File["/var/lib/tomcat7/webapps/share.war"],
 		],
 		require => [
 			File["/var/lib/tomcat7"], 
-			File["/var/lib/tomcat7/webapps/share.war"],
-			File["/var/lib/tomcat7/webapps/alfresco.war"],
-			File["/var/lib/tomcat7/shared/classes/alfresco-global.properties"],
+			#File["/var/lib/tomcat7/webapps/share.war"],
+			#File["/var/lib/tomcat7/webapps/alfresco.war"],
+			#File["/var/lib/tomcat7/shared/classes/alfresco-global.properties"],
 			#User["${alfresco_sys_user}"],
 
 			# By default the logs go where alfresco starts from, and in this case
@@ -173,13 +175,13 @@ class alfresco-common{
 
 	# the war files and global properties template
 	file { "/var/lib/tomcat7/webapps/alfresco.war":
-		source => "/tmp/web-server/webapps/alfresco.war",
+		source => "/tmp/alfresco/web-server/webapps/alfresco.war",
 		require => Exec["unzip-alfresco-ce"],
 		before => Service["tomcat7"],
 		ensure => present,
 	}
 	file { "/var/lib/tomcat7/webapps/share.war":
-		source => "/tmp/web-server/webapps/share.war",
+		source => "/tmp/alfresco/web-server/webapps/share.war",
 		require => Exec["unzip-alfresco-ce"],
 		before => Service["tomcat7"],
 		ensure => present,
@@ -233,13 +235,7 @@ class alfresco-common{
 		],
 	}
 
-	# copy alfresco bin files to the alfresco base dir
-	file { "${alfresco_base_dir}/bin":
-		ensure => directory,
-		recurse => true,
-		source => "/tmp/alfresco/bin",
-		require => Exec["unzip-alfresco-ce"],
-	}
+
 
 
 	file { "${alfresco_base_dir}/amps":
