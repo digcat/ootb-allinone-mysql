@@ -22,3 +22,8 @@ Things to know
 * The “trusty64” box I use I got from http://vagrantbox.es: 
     * this I think: https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box
 * Currently search is set to lucene
+* When first running any maven build for a plugin, as usual this is very slow, but there is a settings.xml file which gets
+ installed prior to maven running which redirects the m2 repository folder to /vagrant/cache-m2, which should make later builds
+ much quicker. It might work to speed things up if you were to copy your own .m2/repository folder contents into this location first
+ (with the permissions of the user who runs vagrant). Of course this will not be relevant for puppet builds direct to a server and in
+ that instance this file will be excluded.

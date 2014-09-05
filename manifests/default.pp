@@ -45,6 +45,28 @@ file {"/vagrant/files":
 	before => [ Exec["retrieve-alfresco-ce"], Exec["retrieve swftools"], Exec["retrieve-tomcat7"], ],
 }
 
+# the settings in here allow us to cache the m2 repository stuff between vm destruction and rebuild
+# by setting the repository root to /vagrant/cache-m2
+file { "/root/.m2/settings.xml":
+	#source => "puppet:///alfresco-common/mvn-settings.xml",
+	source => "/vagrant/modules/alfresco-common/files/mvn-settings.xml",
+	require => File["/root/.m2"],
+	ensure => present,
+	before => Class["addons"],
+}
+
+file { "/root/.m2":
+	ensure => directory,
+}
+
+
+file { "/etc/motd":
+#	source => "puppet:///alfresco-common/bee-ascii.txt",
+	ensure => present,
+	before => Exec["apt-get update"],
+	source => "/vagrant/modules/alfresco-common/files/bee-ascii.txt",
+}
+
 
 exec { "apt-get update":
 	path => "/usr/bin",
