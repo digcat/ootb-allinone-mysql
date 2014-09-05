@@ -33,6 +33,15 @@ class alfresco-common{
 	}
 
 
+
+	# we need an init script, this one is stolen from ubuntu (and may yet need further deps)
+	file { "/etc/init.d/tomcat7":
+		ensure => present,
+		source => "puppet:///modules/alfresco-common/tomcat7-init",		
+		before => Service["tomcat7"],
+	}
+
+
 	# TODO share.war is referenced here but it doesn't want to be if we are installing
 	# share-war but not alfresco-war. Need to work out how to split them out. Note that
 	# it is not possible to reference the tomcat7 service in both alfresco-war and
@@ -83,7 +92,7 @@ class alfresco-common{
 	}
 
 	file { "/var/lib/tomcat7/conf/catalina.properties":
-		source => "puppet:///modules/alfresco-war/catalina.properties",
+		source => "puppet:///modules/alfresco-common/catalina.properties",
 		ensure => present,
 		require => [ File["/var/lib/tomcat7"] ],
 		before => Service["tomcat7"],
