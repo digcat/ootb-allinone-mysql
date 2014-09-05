@@ -109,11 +109,13 @@ class addons {
 		source => "/tmp/content-stores/repository/target/org.alfresco.hackathon.content-stores.repo-0.0.1.0-SNAPSHOT.amp",
 		ensure => present,
 		before => Exec["apply-addons"],
+		require => Exec["build-content-stores"],
 	}
 	file { "${alfresco_base_dir}/amps_share/org.alfresco.hackathon.content-stores.share-0.0.1.0-SNAPSHOT.amp":
 		source => "/tmp/content-stores/share/target/org.alfresco.hackathon.content-stores.share-0.0.1.0-SNAPSHOT.amp",
 		ensure => present,	
 		before => Exec["apply-addons"],
+		require => Exec["build-content-stores"],
 	}
 
 	############ SAMPLE #2 END ######################################
@@ -159,31 +161,31 @@ class addons {
 
 	file { "/var/lib/tomcat7/webapps/alfresco/WEB-INF/lib":
 		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/alfresco/WEB-INF",
+		require => File["/var/lib/tomcat7/webapps/alfresco/WEB-INF"],
 	}
 	file { "/var/lib/tomcat7/webapps/alfresco/WEB-INF":
 		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/alfresco",
+		require => File["/var/lib/tomcat7/webapps/alfresco"],
 	}
 	file { "/var/lib/tomcat7/webapps/alfresco":
 		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/",
+		require => File["/var/lib/tomcat7/webapps/"],
 	}
 	file { "/var/lib/tomcat7/webapps/share/WEB-INF/lib":
 		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/share/WEB-INF",
+		require => File["/var/lib/tomcat7/webapps/share/WEB-INF"],
 	}
 	file { "/var/lib/tomcat7/webapps/share/WEB-INF":
 		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/share",
+		require => File["/var/lib/tomcat7/webapps/share"],
 	}
 	file { "/var/lib/tomcat7/webapps/share":
 		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/",
+		require => File["/var/lib/tomcat7/webapps/"],
 	}
 	file { "/var/lib/tomcat7/webapps":
 		ensure => directory,
-		require => File["/var/lib/tomcat7",
+		require => File["/var/lib/tomcat7"],
 	}
 
 	file { "/var/lib/tomcat7/webapps/alfresco/WEB-INF/lib/fme-alfresco-extdl-repo-1.2.jar":
@@ -194,7 +196,7 @@ class addons {
 		# in place without a cross-dependency
 		before => Exec["apply-addons"],
 
-		require => File["/var/lib/tomcat7/webapps/alfresco/WEB-INF/lib"],
+		require => [ File["/var/lib/tomcat7/webapps/alfresco/WEB-INF/lib"], Exec["build-datalist-exts"], ],
 	}
 	file { "/var/lib/tomcat7/webapps/share/WEB-INF/lib/fme-alfresco-extdl-share-1.2.jar":
 		source => "/tmp/fme-alfresco-extdl/fme-alfresco-extdl-share/target/fme-alfresco-extdl-share-1.2.jar",
@@ -202,6 +204,7 @@ class addons {
 		# it doesn't actually need to be before apply-addons, not like the amps, but it will get it
 		# in place without a cross-dependency
 		before => Exec["apply-addons"],
+		require => [ File["/var/lib/tomcat7/webapps/share/WEB-INF/lib"], Exec["build-datalist-exts"], ],
 	}
 
 	############ SAMPLE #3 END ######################################
