@@ -12,6 +12,7 @@ $alfresco_db_port = "3306"
 # Username of alfresco user in unix system (not used right now, tomcat7 user is owner)
 #$alfresco_sys_user = "alfrescosys"
 
+$alfresco_version = "4.2.f"
 $alfresco_ce_filename = "alfresco-community-4.2.f.zip"
 $alfresco_ce_url = "http://dl.alfresco.com/release/community/4.2.f-build-00012/${alfresco_ce_filename}"
 
