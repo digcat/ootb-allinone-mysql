@@ -14,19 +14,29 @@ class swftools {
 	}
 
 	exec { "unpack swftools":
-        command => "tar xzf /vagrant/swftools.tar.gz",
-        path => "/bin",
-        cwd => "/tmp",
-        require => [ Package["tar"], Exec["retrieve swftools"], ],
-    
-    }
+		command => "tar xzf /vagrant/swftools.tar.gz",
+		path => "/bin",
+		cwd => "/tmp",
+		require => [ Package["tar"], Exec["retrieve swftools"], ],
+	    
+	}
 
     exec { "build swftools":
-        require => [ Exec["unpack swftools"], ],
+        require => [ 
+		Exec["unpack swftools"], 
+		Package["build-essential"],
+		Package["g++"],
+		Package["libgif-dev"],
+		Package["libjpeg62-dev"],
+		Package["libfreetype6-dev"],
+		Package["libpng12-dev"],
+		Package["libt1-dev"],
+		],
         command => "./configure && make && make install",
         path => "/bin:/usr/bin",
         cwd => "/tmp/swftools-2013-04-09-1007",
         provider => "shell",
+	before => Package["tomcat7"]
     }
 
 

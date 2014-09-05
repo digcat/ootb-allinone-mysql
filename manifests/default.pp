@@ -18,6 +18,10 @@ $alfresco_ce_url = "http://dl.alfresco.com/release/community/4.2.f-build-00012/$
 # where alf_data lives; the webapps are in /var/lib/tomcat7/webapps
 $alfresco_base_dir = "/opt/alfrescobase"
 
+$name_tomcat = "apache-tomcat-7.0.55"
+$filename_tomcat = "${name_tomcat}.tar.gz"
+$url_tomcat = "http://ftp.sunet.se/pub/www/servers/apache/dist/tomcat/tomcat-7/v7.0.55/bin/${filename_tomcat}"
+
 #########################################################################################
 
 # hack so we can save things in the vagrant folder and not have
