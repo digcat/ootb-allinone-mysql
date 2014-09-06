@@ -11,8 +11,10 @@ Do not use this yet! It will not produce a working system at this time.
     * When first running any maven build for a plugin, as usual this is very slow, but there is a settings.xml file which gets
       installed prior to maven running which redirects the m2 repository folder to /vagrant/cache-m2, which should make later builds
       much quicker. 
+    * Once the addons have been built into ./addons-built you can issue ‘vagrant halt’ to shut down the VM if you think
+      you might use it again, or else ‘vagrant destroy’ will halt and delete the VM.
 * Once the addons are built you can proceed to build the alfresco server
-    * Start by importing dependencies by running ‘install-puppet-modules.sh’
+    * Start by importing puppet dependencies by running ‘install-puppet-modules.sh’
     * Next run ‘vagrant up alfresco’
     * If by some miracle things are working you may be able to log in at http://localhost:3080/share
 
