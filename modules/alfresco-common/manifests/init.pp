@@ -19,14 +19,27 @@ class alfresco-common{
 		unless => "test -f ${tomcat_home}/bin/bootstrap.jar",
 	}
 
-	file { "${tomcat_home}":
-		ensure => directory,
-		source => "/tmp/${name_tomcat}",
-		require => Exec["unpack-tomcat7"],
-		recurse => true,
-		owner => "tomcat7",
-	}
 
+#
+# YUK! doing it this way gives me a million tomcat files under puppet's command, it's noisy and ugly
+#
+#	file { "${tomcat_home}":
+#		ensure => directory,
+#		source => "/tmp/${name_tomcat}",
+#		require => Exec["unpack-tomcat7"],
+#		recurse => true,
+#		owner => "tomcat7",
+#	}
+
+
+#
+# YUM! copy the tomcat files in place with a bit less pomp
+#
+	exec { "copy tomcat to ${tomcat_home}":
+		command => "mkdir -p ${tomcat_home} && cp -r /tmp/${name_tomcat}/* ${tomcat_home} && chown -R tomcat7 ${tomcat_home}",
+		path => "/bin:/usr/bin",
+		provider => shell,		
+	}
 
 
 	# we need an init script, this one is stolen from ubuntu (and may yet need further deps)
@@ -52,7 +65,7 @@ class alfresco-common{
 			File["${tomcat_home}/webapps/share.war"],
 		],
 		require => [
-			File["${tomcat_home}"], 
+			Exec["copy tomcat to ${tomcat_home}"], 
 
 			# By default the logs go where alfresco starts from, and in this case
 			# that is ${tomcat_home}, so we need to create the files and give
@@ -66,7 +79,6 @@ class alfresco-common{
 			File["${tomcat_home}/shared/lib"],
 
 
-			# our global properties specifies /opt/alfresco still even though tomcat is elsewhere,
 			File[$alfresco_base_dir],
 
 			Class["::mysql::server"],
@@ -83,13 +95,13 @@ class alfresco-common{
 	file{"${tomcat_home}/shared/lib":
 		ensure => directory,
 		recurse => true,
-		require => [ File["${tomcat_home}"] ],
+		require => [ Exec["copy tomcat to ${tomcat_home}"] ],
 	}
 
 	file { "${tomcat_home}/conf/catalina.properties":
 		content => template("alfresco-common/catalina.properties.erb"),
 		ensure => present,
-		require => [ File["${tomcat_home}"] ],
+		require => [ Exec["copy tomcat to ${tomcat_home}"] ],
 		before => Service["tomcat7"],
 	}
 
@@ -125,7 +137,7 @@ class alfresco-common{
 		ensure => present,
 		owner => "tomcat7",
 		require => [
-			File["${tomcat_home}"],
+			Exec["copy tomcat to ${tomcat_home}"],
 			User["tomcat7"],
 		],
 		before => Service["tomcat7"],
@@ -134,7 +146,7 @@ class alfresco-common{
 		ensure => present,
 		owner => "tomcat7",
 		require => [
-			File["${tomcat_home}"],
+			Exec["copy tomcat to ${tomcat_home}"],
 			User["tomcat7"],
 		],
 		before => Service["tomcat7"],
@@ -150,13 +162,13 @@ class alfresco-common{
 
 	# the war files and global properties template
 	file { "${tomcat_home}/webapps/alfresco.war":
-		source => "/tmp/alfresco/web-server/webapps/alfresco.war",
+		source => "${alfresco_war_loc}/alfresco.war",
 		require => Exec["unzip-alfresco-ce"],
 		before => Service["tomcat7"],
 		ensure => present,
 	}
 	file { "${tomcat_home}/webapps/share.war":
-		source => "/tmp/alfresco/web-server/webapps/share.war",
+		source => "${alfresco_war_loc}/webapps/share.war",
 		require => Exec["unzip-alfresco-ce"],
 		before => Service["tomcat7"],
 		ensure => present,
@@ -188,14 +200,14 @@ class alfresco-common{
 	}
 	file { "${tomcat_home}/shared":
 		ensure => directory,
-		require => File["${tomcat_home}"],
+		require => Exec["copy tomcat to ${tomcat_home}"],
 	}
 
 
 	# tomcat memory set in here
 	file { "/etc/default/tomcat7":
 		before => Service["tomcat7"],
-		require => File["${tomcat_home}"],
+		require => Exec["copy tomcat to ${tomcat_home}"],
 		content => template("alfresco-common/default-tomcat7.erb")
 	}
 
@@ -218,7 +230,7 @@ class alfresco-common{
 		path => "/usr/bin",
 		require => [ 
 			Exec["retrieve-alfresco-ce"],
-			File["${tomcat_home}"], 
+			Exec["copy tomcat to ${tomcat_home}"], 
 			Package["unzip"], 
 			File["/tmp/alfresco"],
 		],
