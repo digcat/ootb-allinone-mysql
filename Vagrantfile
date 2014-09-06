@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
     addonbuilder.vm.provision :puppet do |puppet|
       puppet.module_path = "buildmodules"
       puppet.manifest_file = "buildmodules.pp"
-      puppet.options = ["--verbose", "--debug"]
+      #puppet.options = ["--verbose", "--debug"]
     end
   end
 

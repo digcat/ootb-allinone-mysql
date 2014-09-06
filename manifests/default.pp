@@ -12,9 +12,18 @@ $alfresco_db_port = "3306"
 # Username of alfresco user in unix system (not used right now, tomcat7 user is owner)
 #$alfresco_sys_user = "alfrescosys"
 
-$alfresco_version = "4.2.f"
-$alfresco_ce_filename = "alfresco-community-4.2.f.zip"
-$alfresco_ce_url = "http://dl.alfresco.com/release/community/4.2.f-build-00012/${alfresco_ce_filename}"
+#$alfresco_version = "4.2.f"
+#$alfresco_ce_filename = "alfresco-community-4.2.f.zip"
+#$alfresco_ce_url = "http://dl.alfresco.com/release/community/4.2.f-build-00012/${alfresco_ce_filename}"
+
+
+$alfresco_version = "5.0.a"
+$alfresco_ce_filename = "alfresco-community-5.0.a.zip"
+$alfresco_ce_url = "http://dl.alfresco.com/release/community/5.0.a-build-00023/${alfresco_ce_filename}"
+
+
+
+
 
 # where alf_data lives; 
 $alfresco_base_dir = "/opt/alfrescobase"

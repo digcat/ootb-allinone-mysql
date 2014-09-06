@@ -1,7 +1,11 @@
 ootb-allinone-mysql
 ===================
 
-Do not use this yet! It will not produce a working system at this time.
+If you are very lucky you might be able to get the whole thing to run from start to end by 
+executing ./fromscratch.sh but please note that when building a maven sdk addon for the first
+time there is a long delay while many packages are fetched. You may speed this up by copying the 
+contents of your /home/.m2/repository folder into the cache-m2 folder below the folder this README
+is contained within. If the cache-m2 folder does not exist, create it.
 
 * There are 2 VMs to be run using vagrant, “addonbuilder” and “alfresco”.
 * To get started, you should run “vagrant up addonbuilder” which will create addon packages
