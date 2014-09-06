@@ -1,0 +1,13 @@
+                                                __/   _
+                                        .__  __.  \__/   __
+      ORDER OF THE BEE                   .-`'-.   /  \__/
+                                     .-.(  oo  ).-. _/  \__/
+      Honeycomb Builder          __ :   \".~~."/   ; \__/
+                                /  \_`.  Y`--'Y  .' _/  \__
+                                 __/  `./======\.'   \__/  \_
+                                /  \__/ \======/  \__/  \__/
+                                \__/   (_`----'_)    \__/  \ (PS)
+
+This Virtual Machine will build the addons and leave them in ./addons-built
+
+
