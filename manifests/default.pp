@@ -16,8 +16,12 @@ $alfresco_version = "4.2.f"
 $alfresco_ce_filename = "alfresco-community-4.2.f.zip"
 $alfresco_ce_url = "http://dl.alfresco.com/release/community/4.2.f-build-00012/${alfresco_ce_filename}"
 
-# where alf_data lives; the webapps are in /var/lib/tomcat7/webapps
+# where alf_data lives; 
 $alfresco_base_dir = "/opt/alfrescobase"
+
+# where tomcat bin and webapps live
+$tomcat_home = "/var/lib/tomcat7"
+
 
 $name_tomcat = "apache-tomcat-7.0.55"
 $filename_tomcat = "${name_tomcat}.tar.gz"

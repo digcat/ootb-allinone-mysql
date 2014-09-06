@@ -3,39 +3,33 @@ class addons {
 
 	include "addons-jsconsole"
 	include "addons-content-stores"
-	#include "datalist-ext"
+	include "addons-datalist-ext"
 
 
 ######################################################################################################
 
-	file { "/var/lib/tomcat7/webapps/alfresco/WEB-INF/lib":
-		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/alfresco/WEB-INF"],
-	}
-	file { "/var/lib/tomcat7/webapps/alfresco/WEB-INF":
-		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/alfresco"],
-	}
-	file { "/var/lib/tomcat7/webapps/alfresco":
-		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/"],
-	}
-	file { "/var/lib/tomcat7/webapps/share/WEB-INF/lib":
-		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/share/WEB-INF"],
-	}
-	file { "/var/lib/tomcat7/webapps/share/WEB-INF":
-		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/share"],
-	}
-	file { "/var/lib/tomcat7/webapps/share":
-		ensure => directory,
-		require => File["/var/lib/tomcat7/webapps/"],
-	}
-	file { "/var/lib/tomcat7/webapps":
-		ensure => directory,
-		require => File["/var/lib/tomcat7"],
-	}
+#	file { [ 
+#		"${tomcat_home}/webapps/alfresco", 
+#		"${tomcat_home}/webapps/alfresco/WEB-INF",
+#		"${tomcat_home}/webapps/alfresco/WEB-INF/lib",
+#	]:
+#		ensure => directory,
+#		require => File["${tomcat_home}/webapps"],
+#	}
+#
+#	file { [ 
+#		"${tomcat_home}/webapps/share",
+#		"${tomcat_home}/webapps/share/WEB-INF",
+#		"${tomcat_home}/webapps/share/WEB-INF/lib",
+#	]:
+#		ensure => directory,
+#		require => File["${tomcat_home}/webapps"],
+#	}
+#
+#	file { "${tomcat_home}/webapps":
+#		ensure => directory,
+#		require => File["${tomcat_home}"],
+#	}
 
 
 
@@ -51,9 +45,9 @@ class addons {
 	exec { "apply-addons":
 		require => [
 			File["${alfresco_base_dir}/bin/apply_amps.sh"],
-			File["${alfresco_base_dir}/amps/javascript-console-repo-0.5.1.amp"],
-			File["${alfresco_base_dir}/amps_share/javascript-console-share-0.5.1.amp"],
+			Exec["unpack-tomcat7"], # TODO CROSSDEP!
 		],
+		before => [ Service["tomcat7-service"], ], # TODO CROSSDEP!
 		path => "/bin:/usr/bin",
 		command => "${alfresco_base_dir}/bin/apply_amps.sh",
 		notify => Exec["fix-war-permissions"],
@@ -69,6 +63,6 @@ class addons {
 
 	exec { "fix-war-permissions":
 		path => "/bin",
-		command => "chown tomcat7 /var/lib/tomcat7/webapps/*.war",
+		command => "chown tomcat7 ${tomcat_home}/webapps/*.war",
 	}
 }

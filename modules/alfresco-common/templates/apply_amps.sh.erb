@@ -15,7 +15,7 @@ export SCRIPTPATH=$(pwd)
 #export ALF_HOME=${SCRIPTPATH%/*}
 #export CATALINA_HOME=$ALF_HOME/tomcat
 export ALF_HOME=<%= @alfresco_base_dir %>
-export CATALINA_HOME=/var/lib/tomcat7
+export CATALINA_HOME=<%= @tomcat_home %>
 
 #. $ALF_HOME/scripts/setenv.sh
 #echo "This script will apply all the AMPs in amps and amps_share to the alfresco.war and share.war files in $CATALINA_HOME/webapps"

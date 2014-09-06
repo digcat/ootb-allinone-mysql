@@ -6,6 +6,7 @@ Do not use this yet! It will not produce a working system at this time.
 * There are 2 VMs to be run using vagrant, “addonbuilder” and “alfresco”.
 * To get started, you should run “vagrant up addonbuilder” which will create addon packages
   in ./addons-built/
+    * You might need to find a "trusty64" box or else change that to "precise64" in your Vagrantfile (see 'Things to know' below)
     * If it gets interrupted, you can restart with “vagrant provision addonbuilder” if the
       VM is already running
     * When first running any maven build for a plugin, as usual this is very slow, but there is a settings.xml file which gets
@@ -25,6 +26,8 @@ What to modify
 
 Things to know
 
+* You can use ‘vagrant ssh’ to log in to either vagrant-managed vm, i.e. ‘vagrant ssh addonbuilder’ or
+  ‘vagrant ssh alfresco’
 * Alfresco <s>runs under the ubuntu managed package ‘tomcat7’</s> used to run under the ubuntu
   managed package and so all the files are in their previous locations... TODO: make this location configurable
     * Therefore the wars are found under /var/lib/tomcat7/webapps
@@ -34,3 +37,6 @@ Things to know
 * The “trusty64” box I use I got from http://vagrantbox.es: 
     * this I think: https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box
 * Currently search is set to ‘’’lucene’’’
+* The 'addonbuilder' VM builds 3 addons currently, but the 'alfresco' VM only installs two of them at the moment as one of them
+  prevents proper startup (see modules/addons/manifests/init.pp) - TODO: create tests to automatically determine the breaking
+  addon and remove it from the build. Currently thinking of selenium for this.
