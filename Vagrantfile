@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "alfresco" do |alfresco|
 
     alfresco.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "4096"]
+      vb.customize ["modifyvm", :id, "--memory", "3072"]
       vb.customize ["modifyvm", :id, "--cpus", "2"]   
     end  
 

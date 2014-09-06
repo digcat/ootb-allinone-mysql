@@ -1,5 +1,5 @@
 
-$java_opts = "-Xmx2G -XX:MaxPermSize=180M"
+$java_opts = "-Xmx1500M -XX:MaxPermSize=180M"
 
 $db_root_password = "strongpassword"
 

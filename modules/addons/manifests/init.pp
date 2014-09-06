@@ -47,7 +47,7 @@ class addons {
 			File["${alfresco_base_dir}/bin/apply_amps.sh"],
 			Exec["unpack-tomcat7"], # TODO CROSSDEP!
 		],
-		before => [ Service["tomcat7-service"], ], # TODO CROSSDEP!
+		before => [ Service["tomcat7"], ], # TODO CROSSDEP!
 		path => "/bin:/usr/bin",
 		command => "${alfresco_base_dir}/bin/apply_amps.sh",
 		notify => Exec["fix-war-permissions"],

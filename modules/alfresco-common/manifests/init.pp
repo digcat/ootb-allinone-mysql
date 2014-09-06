@@ -34,7 +34,8 @@ class alfresco-common{
 		ensure => present,
 		#source => "puppet:///modules/alfresco-common/tomcat7-init",		
 		content => template("alfresco-common/tomcat7-init.erb"),
-		before => Service["tomcat7-service"],
+		before => Service["tomcat7"],
+		mode => "0755",
 	}
 
 
@@ -42,7 +43,7 @@ class alfresco-common{
 	# share-war but not alfresco-war. Need to work out how to split them out. Note that
 	# it is not possible to reference the tomcat7 service in both alfresco-war and
 	# share-war classes in the case that they are both being loaded (i.e. allinone)
-	service { "tomcat7-service":
+	service { "tomcat7":
 		ensure  => "running",
 		#ensure  => "stopped", # TODO for now I am leaving it stopped so I can watch things start up
 		subscribe => [
@@ -52,10 +53,6 @@ class alfresco-common{
 		],
 		require => [
 			File["${tomcat_home}"], 
-			#File["${tomcat_home}/webapps/share.war"],
-			#File["${tomcat_home}/webapps/alfresco.war"],
-			#File["${tomcat_home}/shared/classes/alfresco-global.properties"],
-			#User["${alfresco_sys_user}"],
 
 			# By default the logs go where alfresco starts from, and in this case
 			# that is ${tomcat_home}, so we need to create the files and give
@@ -90,11 +87,10 @@ class alfresco-common{
 	}
 
 	file { "${tomcat_home}/conf/catalina.properties":
-		#source => "puppet:///modules/alfresco-common/catalina.properties",
 		content => template("alfresco-common/catalina.properties.erb"),
 		ensure => present,
 		require => [ File["${tomcat_home}"] ],
-		before => Service["tomcat7-service"],
+		before => Service["tomcat7"],
 	}
 
 
@@ -105,22 +101,9 @@ class alfresco-common{
 		require => [ 
 			User["tomcat7"], 
 		],
-		before => Service["tomcat7-service"],
+		before => Service["tomcat7"],
 		#before => Class["keystore"],
 	}
-
-
-
-#	# attempting to use non-versioned link to connector
-#	file { "${tomcat_home}/shared/lib/mysql-connector-java.jar":
-#		target => "/usr/share/java/mysql-connector-java.jar",
-#		ensure => link,
-#		
-#		# libmysql-java provided by "class { '::mysql::bindings':" in the default.pp, 
-#		# needs to go elsewhere TODO
-#		require => [ Package["libmysql-java"] ], 
-#	}
-
 
 	# attempting to use non-versioned link to connector
 	file { "${tomcat_home}/shared/lib/mysql-connector-java.jar":
@@ -131,7 +114,7 @@ class alfresco-common{
 		# libmysql-java provided by "class { '::mysql::bindings':" in the default.pp, 
 		# needs to go elsewhere TODO
 		require => [ Package["libmysql-java"] ], 
-		before => Service["tomcat7-service"],
+		before => Service["tomcat7"],
 	}
 
 
@@ -145,7 +128,7 @@ class alfresco-common{
 			File["${tomcat_home}"],
 			User["tomcat7"],
 		],
-		before => Service["tomcat7-service"],
+		before => Service["tomcat7"],
 	}
 	file { "${tomcat_home}/share.log":
 		ensure => present,
@@ -154,11 +137,11 @@ class alfresco-common{
 			File["${tomcat_home}"],
 			User["tomcat7"],
 		],
-		before => Service["tomcat7-service"],
+		before => Service["tomcat7"],
 	}
 	user { "tomcat7":
 		ensure => present,
-		before => Service["tomcat7-service"],
+		before => Service["tomcat7"],
 	}
 
 
@@ -169,19 +152,18 @@ class alfresco-common{
 	file { "${tomcat_home}/webapps/alfresco.war":
 		source => "/tmp/alfresco/web-server/webapps/alfresco.war",
 		require => Exec["unzip-alfresco-ce"],
-		before => Service["tomcat7-service"],
+		before => Service["tomcat7"],
 		ensure => present,
 	}
 	file { "${tomcat_home}/webapps/share.war":
 		source => "/tmp/alfresco/web-server/webapps/share.war",
 		require => Exec["unzip-alfresco-ce"],
-		before => Service["tomcat7-service"],
+		before => Service["tomcat7"],
 		ensure => present,
 	}
 	file { "${tomcat_home}/shared/classes/alfresco-global.properties":
 		require => File["${tomcat_home}/shared/classes"],
 		content => template("alfresco-war/alfresco-global.properties.erb"),
-		#before => File["${tomcat_home}"],
 		ensure => present,
 	}
 
@@ -189,23 +171,15 @@ class alfresco-common{
 		require => [
 			File["${tomcat_home}/webapps/alfresco.war"],
 		],
-		before => [ 
-			Class["addons"],
-		],						
-		owner => "tomcat7",
 		path => "/bin:/usr/bin",
-		command => "unzip -o -d ${tomcat_home}/webapps/alfresco ${tomcat_home}/webapps/alfresco.war", 
+		command => "unzip -o -d ${tomcat_home}/webapps/alfresco ${tomcat_home}/webapps/alfresco.war && chown -R tomcat7 ${tomcat_home}/webapps/alfresco", 
 	}
 	exec { "unpack-share-war": 
 		require => [
 			File["${tomcat_home}/webapps/share.war"],
 		],
-		before => [ 
-			Class["addons"],
-		],
-		owner => "tomcat7",
 		path => "/bin:/usr/bin",
-		command => "unzip -o -d ${tomcat_home}/webapps/share ${tomcat_home}/webapps/share.war", 
+		command => "unzip -o -d ${tomcat_home}/webapps/share ${tomcat_home}/webapps/share.war && chown -R tomcat7 ${tomcat_home}/webapps/share", 
 	}
 
 	file { "${tomcat_home}/shared/classes":
@@ -220,7 +194,7 @@ class alfresco-common{
 
 	# tomcat memory set in here
 	file { "/etc/default/tomcat7":
-		before => Service["tomcat7-service"],
+		before => Service["tomcat7"],
 		require => File["${tomcat_home}"],
 		content => template("alfresco-common/default-tomcat7.erb")
 	}
