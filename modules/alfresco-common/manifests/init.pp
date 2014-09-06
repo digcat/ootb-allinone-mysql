@@ -168,7 +168,7 @@ class alfresco-common{
 		ensure => present,
 	}
 	file { "${tomcat_home}/webapps/share.war":
-		source => "${alfresco_war_loc}/webapps/share.war",
+		source => "${alfresco_war_loc}/share.war",
 		require => Exec["unzip-alfresco-ce"],
 		before => Service["tomcat7"],
 		ensure => present,
