@@ -38,7 +38,7 @@ class addons {
 	file { "${alfresco_base_dir}/bin":
 		ensure => directory,
 		recurse => true,
-		source => "/tmp/alfresco/bin",
+		source => "${alfresco_unpacked}/bin",
 		require => Exec["unzip-alfresco-ce"], # TODO crossdep
 	}
 

@@ -39,6 +39,7 @@ class alfresco-common{
 		command => "mkdir -p ${tomcat_home} && cp -r /tmp/${name_tomcat}/* ${tomcat_home} && chown -R tomcat7 ${tomcat_home}",
 		path => "/bin:/usr/bin",
 		provider => shell,		
+		require => User["tomcat7"],
 	}
 
 
@@ -153,7 +154,11 @@ class alfresco-common{
 	}
 	user { "tomcat7":
 		ensure => present,
-		before => Service["tomcat7"],
+		before => [ 
+			Exec["unpack-alfresco-war"],
+			Exec["unpack-share-war"],
+			Service["tomcat7"],
+		],
 	}
 
 
@@ -193,6 +198,7 @@ class alfresco-common{
 		path => "/bin:/usr/bin",
 		command => "unzip -o -d ${tomcat_home}/webapps/share ${tomcat_home}/webapps/share.war && chown -R tomcat7 ${tomcat_home}/webapps/share", 
 	}
+
 
 	file { "${tomcat_home}/shared/classes":
 		ensure => directory,
