@@ -41,6 +41,6 @@ Things to know
 * The “trusty64” box I use I got from http://vagrantbox.es: 
     * this I think: https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box
 * Currently search is set to ‘’’lucene’’’
-* The 'addonbuilder' VM <s>builds 3 addons currently, but the 'alfresco' VM only installs two of them at the moment as one of them
+* The 'addonbuilder' VM builds 3 addons <s>currently, but the 'alfresco' VM only installs two of them at the moment as one of them
   prevents proper startup (see modules/addons/manifests/init.pp)</s> - TODO: create tests to automatically determine the breaking
   addon and remove it from the build. Currently thinking of selenium for this.
