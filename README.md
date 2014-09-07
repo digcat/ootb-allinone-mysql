@@ -27,6 +27,9 @@ What to modify
 
 * The configuration is going in the default puppet file which is in manifests/default.pp
     * The variables at the start of the file are used in alfresco-global.properties and in /etc/default/tomcat7
+        * alfresco-global.properties: modules/alfresco-war/templates/alfresco-global.properties.erb
+        * default/tomcat7: modules/alfresco-common/templates/default-tomcat7.erb
+    * and other templates...
 
 Things to know
 
