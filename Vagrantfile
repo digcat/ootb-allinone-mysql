@@ -37,10 +37,19 @@ Vagrant.configure("2") do |config|
     addonbuilder.vm.provision :puppet do |puppet|
       puppet.module_path = "buildmodules"
       puppet.manifest_file = "buildmodules.pp"
-      #puppet.options = ["--verbose", "--debug"]
+      puppet.options = ["--verbose", "--debug"]
     end
   end
-
   config.vm.define "addonbuilder", autostart: false
+
+
+  config.vm.define "tester" do |tester|
+    tester.vm.provision :puppet do |puppet|
+      puppet.module_path = [ "testmodules", "extmodules"]
+      puppet.manifest_file = "testmodules.pp"
+    end
+    tester.vm.network "forwarded_port", guest: 4444, host: 4444
+  end
+
 
 end
