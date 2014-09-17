@@ -89,6 +89,8 @@ class alfresco-common{
 
 		
 	            	File["/etc/default/tomcat7"],
+
+			Exec["apply-addons"],  # TODO CROSSDEP!
 		],
 	}
 
