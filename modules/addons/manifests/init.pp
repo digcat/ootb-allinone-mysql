@@ -4,7 +4,8 @@ class addons {
 	include "addons-jsconsole"
 	include "addons-content-stores"
 	include "addons-datalist-ext"
-	include "addons-zaizi-alfresco-recommendations"
+	
+	#include "addons-zaizi-alfresco-recommendations"
 
 
 ######################################################################################################
