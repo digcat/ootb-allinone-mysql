@@ -11,7 +11,7 @@ is contained within. If the cache-m2 folder does not exist, create it.
 * To get started, you should run “vagrant up addonbuilder” which will create addon packages
   in ./addons-built/
     * You might need to find a "trusty64" box or else change that to "precise64" in your Vagrantfile (see 'Things to know' below) 
-      NOTE: I have not been able to use precise64 due to conflict with virtualbox extensions
+      NOTE: I have not been able to use precise64 due to conflict with virtualbox extensions YMMV
     * If it gets interrupted, you can restart with “vagrant provision addonbuilder” if the
       VM is already running
     * When first running any maven build for a plugin, as usual this is very slow, but there is a settings.xml file which gets
