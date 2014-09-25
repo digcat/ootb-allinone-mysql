@@ -29,5 +29,5 @@
                
                                http://orderofthebee.org/
 
-        NOTE: Tomcat is in /var/lib/tomcat7
+   NOTE: To restart alfresco use "/etc/init.d/tomcat7 restart". Tomcat is in /var/lib/tomcat7
 
