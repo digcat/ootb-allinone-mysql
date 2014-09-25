@@ -41,6 +41,6 @@ include "packages-deps"
 include "content-stores"
 include "jsconsole"
 include "datalist-ext"
-
+include "zaizi-alfresco-recommendations"
 
 

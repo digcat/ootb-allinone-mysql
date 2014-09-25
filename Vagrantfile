@@ -39,6 +39,10 @@ Vagrant.configure("2") do |config|
       puppet.manifest_file = "buildmodules.pp"
       puppet.options = ["--verbose", "--debug"]
     end
+    addonbuilder.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "3072"]
+      vb.customize ["modifyvm", :id, "--cpus", "2"]   
+    end  
   end
   config.vm.define "addonbuilder", autostart: false
 

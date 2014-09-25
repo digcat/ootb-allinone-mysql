@@ -29,3 +29,5 @@
                
                                http://orderofthebee.org/
 
+        NOTE: Tomcat is in /var/lib/tomcat7
+
