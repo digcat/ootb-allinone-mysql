@@ -28,6 +28,9 @@ What to modify
 
 * The configuration is going in the default puppet file which is in manifests/default.pp
     * The variables at the start of the file are used in alfresco-global.properties and in /etc/default/tomcat7
+        * alfresco-global.properties: modules/alfresco-war/templates/alfresco-global.properties.erb
+        * default/tomcat7: modules/alfresco-common/templates/default-tomcat7.erb
+    * and other templates...
 
 Things to know
 
@@ -40,8 +43,9 @@ Things to know
     * Apart from alfresco.log and share.log which are in /var/lib/tomcat7 for now
 * Right now most of the provisioning code is in alfresco-common, alfresco-war and share-war really aren’t doing anything useful
 * The “trusty64” box I use I got from http://vagrantbox.es: 
-    * this I think: https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box
-* Currently search is set to ‘’’lucene’’’
-* The 'addonbuilder' VM <s>builds 3 addons currently, but the 'alfresco' VM only installs two of them at the moment as one of them
+    * this I think: "vagrant box add trusty64 https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+    * alternatively, change to 'precise64' in Vagrantfile (or it may already have changed) and issue "vagrant box add precise64 http://files.vagrantup.com/precise64.box"
+* Currently search is set to lucene
+* The 'addonbuilder' VM builds 3 addons <s>currently, but the 'alfresco' VM only installs two of them at the moment as one of them
   prevents proper startup (see modules/addons/manifests/init.pp)</s> - TODO: create tests to automatically determine the breaking
   addon and remove it from the build. Currently thinking of selenium for this.
