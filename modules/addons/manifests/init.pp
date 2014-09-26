@@ -10,31 +10,6 @@ class addons {
 
 ######################################################################################################
 
-#	file { [ 
-#		"${tomcat_home}/webapps/alfresco", 
-#		"${tomcat_home}/webapps/alfresco/WEB-INF",
-#		"${tomcat_home}/webapps/alfresco/WEB-INF/lib",
-#	]:
-#		ensure => directory,
-#		require => File["${tomcat_home}/webapps"],
-#	}
-#
-#	file { [ 
-#		"${tomcat_home}/webapps/share",
-#		"${tomcat_home}/webapps/share/WEB-INF",
-#		"${tomcat_home}/webapps/share/WEB-INF/lib",
-#	]:
-#		ensure => directory,
-#		require => File["${tomcat_home}/webapps"],
-#	}
-#
-#	file { "${tomcat_home}/webapps":
-#		ensure => directory,
-#		require => File["${tomcat_home}"],
-#	}
-
-
-
 
 	# copy alfresco bin files to the alfresco base dir
 	file { "${alfresco_base_dir}/bin":
