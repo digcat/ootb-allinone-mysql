@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
     alfresco.vm.provision :puppet do |puppet|
       puppet.module_path = ["modules", "extmodules"]
       #puppet.options = ["--templatedir","/tmp/vagrant-puppet/templates", "--verbose", "--debug"]
-#     puppet.options = ["--verbose", "--debug"]
+      #puppet.options = ["--verbose", "--debug"]
     end
 
     alfresco.vm.network "forwarded_port", guest: 8080, host: 3080

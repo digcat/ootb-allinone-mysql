@@ -15,17 +15,17 @@ $alfresco_db_port = "3306"
 # Here you can choose the version to build: TODO: just have the $alfresco_version here, the other 
 # vars can be inferred in another file
 
-#$alfresco_version = "4.2.f"
-#$alfresco_ce_filename = "alfresco-community-4.2.f.zip"
-#$alfresco_ce_url = "http://dl.alfresco.com/release/community/4.2.f-build-00012/${alfresco_ce_filename}"
-#$alfresco_unpacked = "/tmp/alfresco",
-#$alfresco_war_loc = "${alfresco_unpacked}/web-server/webapps"
-
-$alfresco_version = "5.0.a"
-$alfresco_ce_filename = "alfresco-community-5.0.a.zip"
-$alfresco_ce_url = "http://dl.alfresco.com/release/community/5.0.a-build-00023/${alfresco_ce_filename}"
-$alfresco_unpacked = "/tmp/alfresco/alfresco-community-5.0.a"
+$alfresco_version = "4.2.f"
+$alfresco_ce_filename = "alfresco-community-4.2.f.zip"
+$alfresco_ce_url = "http://dl.alfresco.com/release/community/4.2.f-build-00012/${alfresco_ce_filename}"
+$alfresco_unpacked = "/tmp/alfresco"
 $alfresco_war_loc = "${alfresco_unpacked}/web-server/webapps"
+
+#$alfresco_version = "5.0.a"
+#$alfresco_ce_filename = "alfresco-community-5.0.a.zip"
+#$alfresco_ce_url = "http://dl.alfresco.com/release/community/5.0.a-build-00023/${alfresco_ce_filename}"
+#$alfresco_unpacked = "/tmp/alfresco/alfresco-community-5.0.a"
+#$alfresco_war_loc = "${alfresco_unpacked}/web-server/webapps"
 
 
 

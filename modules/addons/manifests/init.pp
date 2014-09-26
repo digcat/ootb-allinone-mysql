@@ -5,7 +5,7 @@ class addons {
 	include "addons-content-stores"
 	include "addons-datalist-ext"
 	
-	#include "addons-zaizi-alfresco-recommendations"
+	include "addons-zaizi-alfresco-recommendations"
 
 
 ######################################################################################################
@@ -53,6 +53,7 @@ class addons {
 		path => "/bin:/usr/bin",
 		command => "${alfresco_base_dir}/bin/apply_amps.sh",
 		notify => Exec["fix-war-permissions"],
+		logoutp
 	}
 
 	file { "${alfresco_base_dir}/bin/apply_amps.sh":
@@ -65,6 +66,7 @@ class addons {
 
 	exec { "fix-war-permissions":
 		path => "/bin",
-		command => "chown tomcat7 ${tomcat_home}/webapps/*.war",
+		command => "chown tomcat7 ${tomcat_home}/webapps/*.war; chmod a+r ${tomcat_home}/webapps/*.war",
+
 	}
 }
