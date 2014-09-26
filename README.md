@@ -41,7 +41,6 @@ Things to know
     * Therefore the wars are found under /var/lib/tomcat7/webapps
     * And logging is in <s>/var/log/tomcat7</s> /var/lib/tomcat7/logs
     * Apart from alfresco.log and share.log which are in /var/lib/tomcat7 for now
-* Right now most of the provisioning code is in alfresco-common, alfresco-war and share-war really aren’t doing anything useful
 * The “trusty64” box I use I got from http://vagrantbox.es: 
     * this I think: "vagrant box add trusty64 https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
     * alternatively, change to 'precise64' in Vagrantfile (or it may already have changed) and issue "vagrant box add precise64 http://files.vagrantup.com/precise64.box"
