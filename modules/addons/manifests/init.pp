@@ -6,7 +6,7 @@ class addons {
 	include "addons-datalist-ext"
 	
 	include "addons-zaizi-alfresco-recommendations"
-
+	include "addons-support-tools"
 
 ######################################################################################################
 
@@ -28,7 +28,7 @@ class addons {
 		path => "/bin:/usr/bin",
 		command => "${alfresco_base_dir}/bin/apply_amps.sh",
 		notify => Exec["fix-war-permissions"],
-		logoutp
+		#logoutp
 	}
 
 	file { "${alfresco_base_dir}/bin/apply_amps.sh":
